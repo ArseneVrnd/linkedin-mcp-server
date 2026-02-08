@@ -1,0 +1,6 @@
+node_modules/
+server/data/tracker.db
+server/uploads/*
+!server/uploads/.gitkeep
+server/.env
+client/dist/

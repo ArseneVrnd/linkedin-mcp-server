@@ -1,0 +1,11 @@
+{
+  "name": "job-tracker-dashboard",
+  "private": true,
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "dev:server": "cd server && node src/index.js",
+    "dev:client": "cd client && npm run dev",
+    "dev": "npm run dev:server & npm run dev:client",
+    "install:all": "npm install"
+  }
+}
