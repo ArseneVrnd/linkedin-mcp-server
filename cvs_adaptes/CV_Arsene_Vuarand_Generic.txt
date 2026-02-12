@@ -1,0 +1,47 @@
+Arsene VUARAND
+Business Analyst | Data Analytics & Business Intelligence
+arsene.vuarand@gmail.com | +33 6 66 85 93 33 | Grenoble, France | github.com/ArseneVrnd
+
+COMPETENCES CLES
+---
+Business Analysis : Analyse de processus metier, recueil de besoins, specifications fonctionnelles, recommandations strategiques
+Business Intelligence : Power BI, DAX, Power Query M, Tableau, Star Schema, ETL, reporting decisionnel
+Data : SQL avance, Python, Pandas, NumPy, modelisation de donnees, data warehouse, Excel avance
+Developpement : Next.js, NestJS, GraphQL, TypeScript, PostgreSQL, Git
+Outils : Jira, ServiceNow, SharePoint, MS Office
+Langues : Francais natif | Anglais C1 (TOEFL 111/120, TOEIC 955/990) | Russe B2
+
+EXPERIENCES PROFESSIONNELLES
+---
+BUSINESS ANALYST | HP (HEWLETT-PACKARD) | Septembre 2025 - Septembre 2026
+- Analyse des processus metier et identification d'opportunites d'optimisation
+- Collecte, nettoyage et modelisation de donnees pour les reportings decisionnels
+- Redaction de specifications fonctionnelles et coordination avec les equipes techniques
+- Synthese de recommandations strategiques a destination du management
+- Conception d'un data warehouse en Star Schema (10 dimensions, 1 fact table) dans Power BI Desktop
+- Optimisation des performances par query folding SQL en Power Query M
+- Mesures DAX avancees (SUMX, DATEDIFF, CALCULATE) pour rapports financiers
+- Dashboard executif Power BI pour programme STF ($200M/an) : +2% couverture (~$4M d'impact marge)
+
+FONDATEUR & DEVELOPPEUR FULL-STACK | COACHGPT (www.coachgpt.fit) | 2025 - Present
+- Application SaaS de coaching fitness IA (9,99 euros/mois)
+- Stack : Next.js 15, NestJS, GraphQL, PostgreSQL, Supabase Auth, Stripe
+- Algorithme IA proprietaire macro-matching (95%+ precision)
+- Marges brutes 89-99% par optimisation strategique des couts
+
+TECHNICIEN SUPPORT INFORMATIQUE | ECONOCOM | Grenoble | 2023-2024
+- Support technique N1/N2, gestion du parc informatique
+- Gestion des incidents cyber : detection hameconnage, analyse d'intrusions
+- Automatisation Python de la redaction des tickets : +15% d'efficience
+
+FORMATION
+---
+Master Grande Ecole Business Analytics & Manager des Systemes d'Information
+Grenoble Ecole de Management (2024-2026)
+
+Licence LEA Anglais-Russe Specialite Management
+Universite Grenoble Alpes (2019-2023)
+
+CERTIFICATIONS
+---
+TOSA Python | Bootdev Python | TryHackMe

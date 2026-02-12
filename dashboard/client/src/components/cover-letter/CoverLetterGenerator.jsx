@@ -1,33 +1,19 @@
 import { useState } from 'react';
-import { Sparkles, Loader2, Save } from 'lucide-react';
+import { Save } from 'lucide-react';
 import { api } from '../../lib/api';
 
 export default function CoverLetterGenerator({ jobId, onGenerated }) {
-  const [generating, setGenerating] = useState(false);
-  const [manualMode, setManualMode] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
   const [content, setContent] = useState('');
   const [error, setError] = useState(null);
 
-  const handleGenerate = async () => {
-    setGenerating(true);
-    setError(null);
-    try {
-      const letter = await api.generateCoverLetter(jobId);
-      onGenerated(letter);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setGenerating(false);
-    }
-  };
-
-  const handleSaveManual = async () => {
+  const handleSave = async () => {
     if (!content.trim()) return;
     try {
       const letter = await api.saveCoverLetter(jobId, content);
       onGenerated(letter);
       setContent('');
-      setManualMode(false);
+      setShowEditor(false);
     } catch (err) {
       setError(err.message);
     }
@@ -35,34 +21,24 @@ export default function CoverLetterGenerator({ jobId, onGenerated }) {
 
   return (
     <div className="space-y-2">
-      <div className="flex gap-2">
-        <button
-          onClick={handleGenerate}
-          disabled={generating}
-          className="px-3 py-1.5 text-sm rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 flex items-center gap-1.5"
-        >
-          {generating ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
-          {generating ? 'Generating...' : 'Generate with AI'}
-        </button>
-        <button
-          onClick={() => setManualMode(!manualMode)}
-          className="px-3 py-1.5 text-sm rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Write Manually
-        </button>
-      </div>
+      <button
+        onClick={() => setShowEditor(!showEditor)}
+        className="px-3 py-1.5 text-sm rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+      >
+        Write Cover Letter
+      </button>
       {error && <p className="text-xs text-red-500">{error}</p>}
-      {manualMode && (
+      {showEditor && (
         <div className="space-y-2">
           <textarea
             value={content}
             onChange={e => setContent(e.target.value)}
             rows={6}
-            placeholder="Write your cover letter..."
+            placeholder="Write or paste your cover letter..."
             className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm"
           />
           <button
-            onClick={handleSaveManual}
+            onClick={handleSave}
             className="px-3 py-1.5 text-sm rounded-lg bg-primary-600 text-white hover:bg-primary-700 flex items-center gap-1.5"
           >
             <Save size={14} /> Save

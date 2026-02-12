@@ -25,9 +25,18 @@ export async function getMcpClient() {
 }
 
 export async function callMcpTool(toolName, args) {
-  const c = await getMcpClient();
-  const result = await c.callTool({ name: toolName, arguments: args });
-  return result;
+  try {
+    const c = await getMcpClient();
+    const result = await c.callTool({ name: toolName, arguments: args });
+    return result;
+  } catch (err) {
+    // Reset connection and retry once
+    client = null;
+    connected = false;
+    const c = await getMcpClient();
+    const result = await c.callTool({ name: toolName, arguments: args });
+    return result;
+  }
 }
 
 export async function checkMcpStatus() {

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import db from '../db.js';
+import { autoTagJob, autoTagJobs, autoTagAllJobs } from '../utils/autoTag.js';
 
 const router = Router();
 
@@ -63,9 +64,10 @@ router.get('/:id', (req, res) => {
   `).all(job.id);
 
   const coverLetters = db.prepare('SELECT * FROM cover_letters WHERE job_id = ? ORDER BY generated_at DESC').all(job.id);
+  const adaptedCvs = db.prepare('SELECT * FROM adapted_cvs WHERE job_id = ? ORDER BY created_at DESC').all(job.id);
   const interviews = db.prepare('SELECT * FROM interviews WHERE job_id = ? ORDER BY interview_date ASC').all(job.id);
 
-  res.json({ ...job, tags, cover_letters: coverLetters, interviews });
+  res.json({ ...job, tags, cover_letters: coverLetters, adapted_cvs: adaptedCvs, interviews });
 });
 
 router.post('/', (req, res) => {
@@ -143,6 +145,138 @@ router.post('/:id/tags', (req, res) => {
 router.delete('/:id/tags/:tagId', (req, res) => {
   db.prepare('DELETE FROM job_tags WHERE job_id = ? AND tag_id = ?').run(req.params.id, req.params.tagId);
   res.json({ success: true });
+});
+
+// Bulk operations
+router.post('/bulk/update-status', (req, res) => {
+  const { job_ids, status } = req.body;
+
+  if (!job_ids || !Array.isArray(job_ids) || job_ids.length === 0) {
+    return res.status(400).json({ error: 'job_ids array is required' });
+  }
+
+  if (!status) {
+    return res.status(400).json({ error: 'status is required' });
+  }
+
+  const validStatuses = ['saved', 'applied', 'phone_screen', 'technical_interview', 'onsite', 'offer', 'negotiation', 'accepted', 'rejected', 'ghosted'];
+  if (!validStatuses.includes(status)) {
+    return res.status(400).json({ error: 'Invalid status' });
+  }
+
+  const placeholders = job_ids.map(() => '?').join(',');
+  const stmt = db.prepare(`UPDATE jobs SET status = ?, updated_at = datetime('now') WHERE id IN (${placeholders})`);
+  const result = stmt.run(status, ...job_ids);
+
+  res.json({ success: true, updated: result.changes });
+});
+
+router.post('/bulk/add-tag', (req, res) => {
+  const { job_ids, tag_id } = req.body;
+
+  if (!job_ids || !Array.isArray(job_ids) || job_ids.length === 0) {
+    return res.status(400).json({ error: 'job_ids array is required' });
+  }
+
+  if (!tag_id) {
+    return res.status(400).json({ error: 'tag_id is required' });
+  }
+
+  let added = 0;
+  const stmt = db.prepare('INSERT OR IGNORE INTO job_tags (job_id, tag_id) VALUES (?, ?)');
+
+  for (const job_id of job_ids) {
+    const result = stmt.run(job_id, tag_id);
+    added += result.changes;
+  }
+
+  res.json({ success: true, added });
+});
+
+router.post('/bulk/remove-tag', (req, res) => {
+  const { job_ids, tag_id } = req.body;
+
+  if (!job_ids || !Array.isArray(job_ids) || job_ids.length === 0) {
+    return res.status(400).json({ error: 'job_ids array is required' });
+  }
+
+  if (!tag_id) {
+    return res.status(400).json({ error: 'tag_id is required' });
+  }
+
+  const placeholders = job_ids.map(() => '?').join(',');
+  const stmt = db.prepare(`DELETE FROM job_tags WHERE job_id IN (${placeholders}) AND tag_id = ?`);
+  const result = stmt.run(...job_ids, tag_id);
+
+  res.json({ success: true, removed: result.changes });
+});
+
+router.post('/bulk/delete', (req, res) => {
+  const { job_ids } = req.body;
+
+  if (!job_ids || !Array.isArray(job_ids) || job_ids.length === 0) {
+    return res.status(400).json({ error: 'job_ids array is required' });
+  }
+
+  const placeholders = job_ids.map(() => '?').join(',');
+  const stmt = db.prepare(`DELETE FROM jobs WHERE id IN (${placeholders})`);
+  const result = stmt.run(...job_ids);
+
+  res.json({ success: true, deleted: result.changes });
+});
+
+router.post('/bulk/generate-cover-letters', async (req, res) => {
+  const { job_ids } = req.body;
+
+  if (!job_ids || !Array.isArray(job_ids) || job_ids.length === 0) {
+    return res.status(400).json({ error: 'job_ids array is required' });
+  }
+
+  // This endpoint returns job info for the client to handle cover letter generation
+  // The actual AI generation should be done client-side or via a separate service
+  const placeholders = job_ids.map(() => '?').join(',');
+  const jobs = db.prepare(`SELECT * FROM jobs WHERE id IN (${placeholders})`).all(...job_ids);
+
+  res.json({
+    success: true,
+    jobs,
+    message: 'Use cover letter generation endpoint for each job'
+  });
+});
+
+// Auto-tagging endpoints
+router.post('/:id/auto-tag', (req, res) => {
+  const result = autoTagJob(parseInt(req.params.id));
+  res.json(result);
+});
+
+router.post('/bulk/auto-tag', (req, res) => {
+  const { job_ids } = req.body;
+
+  if (!job_ids || !Array.isArray(job_ids) || job_ids.length === 0) {
+    return res.status(400).json({ error: 'job_ids array is required' });
+  }
+
+  const results = autoTagJobs(job_ids);
+  const totalTags = results.reduce((sum, r) => sum + (r.tagsApplied?.length || 0), 0);
+
+  res.json({
+    success: true,
+    results,
+    totalTagsApplied: totalTags
+  });
+});
+
+router.post('/auto-tag-all', (req, res) => {
+  const results = autoTagAllJobs();
+  const totalTags = results.reduce((sum, r) => sum + (r.tagsApplied?.length || 0), 0);
+
+  res.json({
+    success: true,
+    totalJobs: results.length,
+    totalTagsApplied: totalTags,
+    results
+  });
 });
 
 export default router;

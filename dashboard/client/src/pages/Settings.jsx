@@ -79,15 +79,6 @@ export default function Settings() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-          <h2 className="text-lg font-semibold mb-4">AI Cover Letter Generation</h2>
-          <p className="text-sm text-gray-500">
-            Set your Anthropic API key in <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">dashboard/server/.env</code> to enable AI-powered cover letter generation.
-          </p>
-          <p className="text-xs text-gray-400 mt-2">
-            Add: <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded">ANTHROPIC_API_KEY=sk-ant-...</code>
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import Jobs from './pages/Jobs';
+import JobPipeline from './pages/JobPipeline';
 import JobDetailPage from './pages/JobDetailPage';
 import Resume from './pages/Resume';
 import Interviews from './pages/Interviews';
@@ -14,6 +15,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/pipeline" element={<JobPipeline />} />
           <Route path="/jobs/:id" element={<JobDetailPage />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/interviews" element={<Interviews />} />

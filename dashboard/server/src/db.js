@@ -37,6 +37,20 @@ db.exec(`
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS saved_searches (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    keywords TEXT NOT NULL,
+    location TEXT,
+    filters TEXT,
+    auto_import INTEGER DEFAULT 0,
+    schedule TEXT,
+    last_run TEXT,
+    is_active INTEGER DEFAULT 1,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS tags (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
@@ -64,6 +78,13 @@ db.exec(`
     generated_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS adapted_cvs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL REFERENCES jobs(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS interviews (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     job_id INTEGER NOT NULL REFERENCES jobs(id) ON DELETE CASCADE,
@@ -76,5 +97,40 @@ db.exec(`
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 `);
+
+// Migrations - Add new columns to existing tables
+const migrations = [
+  // Enhanced job data fields
+  { table: 'jobs', column: 'skills', type: 'TEXT' },
+  { table: 'jobs', column: 'salary_range', type: 'TEXT' },
+  { table: 'jobs', column: 'seniority_level', type: 'TEXT' },
+  { table: 'jobs', column: 'employment_type', type: 'TEXT' },
+  { table: 'jobs', column: 'remote_status', type: 'TEXT' },
+  { table: 'jobs', column: 'benefits', type: 'TEXT' },
+  { table: 'jobs', column: 'applicants_count', type: 'INTEGER' },
+  { table: 'jobs', column: 'posted_date', type: 'TEXT' },
+  { table: 'jobs', column: 'deadline', type: 'TEXT' },
+  { table: 'jobs', column: 'company_url', type: 'TEXT' },
+  { table: 'jobs', column: 'auto_imported', type: 'INTEGER DEFAULT 0' },
+  { table: 'jobs', column: 'match_score', type: 'INTEGER' },
+];
+
+for (const migration of migrations) {
+  try {
+    // Check if column exists
+    const columns = db.prepare(`PRAGMA table_info(${migration.table})`).all();
+    const columnExists = columns.some(col => col.name === migration.column);
+
+    if (!columnExists) {
+      db.exec(`ALTER TABLE ${migration.table} ADD COLUMN ${migration.column} ${migration.type}`);
+      console.log(`Added column ${migration.column} to ${migration.table}`);
+    }
+  } catch (err) {
+    // Column might already exist, ignore
+    if (!err.message.includes('duplicate column name')) {
+      console.error(`Error adding column ${migration.column}:`, err.message);
+    }
+  }
+}
 
 export default db;

@@ -1,501 +1,503 @@
-# LinkedIn MCP Server
+# LinkedIn Job Tracker - Enhanced Fork
+
+> **Forked from:** [stickerdaniel/linkedin-mcp-server](https://github.com/stickerdaniel/linkedin-mcp-server)
+>
+> **Enhanced with:** Full-stack job application tracker + AI-powered CV/cover letter generation
 
 <p align="left">
   <a href="https://pypi.org/project/linkedin-scraper-mcp/" target="_blank"><img src="https://img.shields.io/pypi/v/linkedin-scraper-mcp?color=blue" alt="PyPI"></a>
-  <a href="https://github.com/stickerdaniel/linkedin-mcp-server/actions/workflows/ci.yml" target="_blank"><img src="https://github.com/stickerdaniel/linkedin-mcp-server/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI Status"></a>
-  <a href="https://github.com/stickerdaniel/linkedin-mcp-server/actions/workflows/release.yml" target="_blank"><img src="https://github.com/stickerdaniel/linkedin-mcp-server/actions/workflows/release.yml/badge.svg?branch=main" alt="Release"></a>
   <a href="https://github.com/stickerdaniel/linkedin-mcp-server/blob/main/LICENSE" target="_blank"><img src="https://img.shields.io/badge/License-Apache%202.0-brightgreen?labelColor=32383f" alt="License"></a>
+  <a href="https://claude.ai/download" target="_blank"><img src="https://img.shields.io/badge/Claude_Code-Required-blue" alt="Claude Code"></a>
 </p>
 
-Through this LinkedIn MCP server, AI assistants like Claude can connect to your LinkedIn. Access profiles and companies, search for jobs, or get job details.
+---
 
-## Installation Methods
+## 🎯 What This Fork Adds
 
-[![uvx](https://img.shields.io/badge/uvx-Quick_Install-de5fe9?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDEiIGhlaWdodD0iNDEiIHZpZXdCb3g9IjAgMCA0MSA0MSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTS01LjI4NjE5ZS0wNiAwLjE2ODYyOUwwLjA4NDMwOTggMjAuMTY4NUwwLjE1MTc2MiAzNi4xNjgzQzAuMTYxMDc1IDM4LjM3NzQgMS45NTk0NyA0MC4xNjA3IDQuMTY4NTkgNDAuMTUxNEwyMC4xNjg0IDQwLjA4NEwzMC4xNjg0IDQwLjA0MThMMzEuMTg1MiA0MC4wMzc1QzMzLjM4NzcgNDAuMDI4MiAzNS4xNjgzIDM4LjIwMjYgMzUuMTY4MyAzNlYzNkwzNy4wMDAzIDM2TDM3LjAwMDMgMzkuOTk5Mkw0MC4xNjgzIDM5Ljk5OTZMMzkuOTk5NiAtOS45NDY1M2UtMDdMMjEuNTk5OCAwLjA3NzU2ODlMMjEuNjc3NCAxNi4wMTg1TDIxLjY3NzQgMjUuOTk5OEwyMC4wNzc0IDI1Ljk5OThMMTguMzk5OCAyNS45OTk4TDE4LjQ3NzQgMTYuMDMyTDE4LjM5OTggMC4wOTEwNTkzTC01LjI4NjE5ZS0wNiAwLjE2ODYyOVoiIGZpbGw9IiNERTVGRTkiLz4KPC9zdmc+Cg==)](#-uvx-setup-recommended---universal)
-[![Docker](https://img.shields.io/badge/Docker-Universal_MCP-008fe2?style=for-the-badge&logo=docker&logoColor=008fe2)](#-docker-setup)
-[![Install DXT Extension](https://img.shields.io/badge/Claude_Desktop_DXT-d97757?style=for-the-badge&logo=anthropic)](#-claude-desktop-dxt-extension)
-[![Development](https://img.shields.io/badge/Development-Local-ffdc53?style=for-the-badge&logo=python&logoColor=ffdc53)](#-local-setup-develop--contribute)
+This fork extends the original LinkedIn MCP Server with a **complete job application management system**:
 
-<https://github.com/user-attachments/assets/eb84419a-6eaf-47bd-ac52-37bc59c83680>
+### ✨ New Features
 
-## Usage Examples
+1. **📊 Full-Stack Dashboard** - React + Express + SQLite job tracker
+2. **🤖 AI CV Adaptation** - Automatically tailors your resume to each job (finance-focused)
+3. **✍️ AI Cover Letter Generation** - Creates comprehensive 500-700 word cover letters
+4. **🏷️ Intelligent Auto-Tagging** - Automatically categorizes jobs (Remote, Senior, High Salary, etc.)
+5. **📈 Analytics Dashboard** - Track success metrics, conversion rates, time-to-interview
+6. **🗂️ Kanban Pipeline** - Drag-and-drop job status management
+7. **⚡ Keyboard Shortcuts** - Fast workflow navigation (Ctrl+N, Ctrl+I, etc.)
+8. **📅 Scheduled Searches** - Automated job discovery with cron
+9. **🎨 Skills Gap Analysis** - Identify missing skills for target roles
+10. **📄 PDF Export** - Generate professional CVs directly from dashboard
 
-```
-Research the background of this candidate https://www.linkedin.com/in/stickerdaniel/
-```
+### 🤖 AI-Powered Automation
 
-```
-Get this company profile for partnership discussions https://www.linkedin.com/company/inframs/
-```
+**🔑 Key Benefit:** With a Claude Code subscription, you get **automatic** CV and cover letter generation for every job you scrape - **no API keys, no extra costs**.
 
-```
-Suggest improvements for my CV to target this job posting https://www.linkedin.com/jobs/view/4252026496
-```
+When you import jobs from LinkedIn, Claude automatically:
+- Adapts your CV to match the job description
+- Generates a tailored 500-700 word cover letter
+- Saves everything to your dashboard for review
 
-```
-What has Anthropic been posting about recently? https://www.linkedin.com/company/anthropic/
-```
+**Just scrape → Claude handles the rest → You review and apply!**
 
-## Features & Tool Status
+---
 
-| Tool | Description | Status |
-|------|-------------|--------|
-| `get_person_profile` | Get detailed profile info including work history, education, contacts, interests | Working |
-| `get_company_profile` | Extract company information including employees, affiliated companies | Working |
-| `get_company_posts` | Get recent posts from a company's LinkedIn feed | Working |
-| `search_jobs` | Search for jobs with keywords and location filters | Working |
-| `get_job_details` | Get detailed information about a specific job posting | Working |
-| `close_session` | Close browser session and clean up resources | Working |
+## 🚀 Quick Start (3 Steps)
 
-> [!WARNING]
-> The session file at `~/.linkedin-mcp/session.json` contains sensitive authentication data. Keep it secure and do not share it.
+### Prerequisites
+- **[Claude Code](https://claude.com/claude-code)** - Required for AI automation (paid subscription)
+- **[Node.js 20+](https://nodejs.org/)** - For the dashboard
+- **[Python 3.12+](https://www.python.org/downloads/)** with [uv](https://docs.astral.sh/uv/)
+- **[Playwright](https://playwright.dev/)** - For LinkedIn scraping
 
-<br/>
-<br/>
-
-## 🚀 uvx Setup (Recommended - Universal)
-
-**Prerequisites:** Make sure you have [uv](https://docs.astral.sh/uv/) and Playwright `uvx playwright install chromium` installed.
-
-### Installation
-
-**Step 1: Create a session (first time only)**
+### Step 1: Set Up LinkedIn MCP Server
 
 ```bash
-uvx linkedin-scraper-mcp --get-session
-```
-
-This opens a browser for you to log in manually (5 minute timeout for 2FA, captcha, etc.). The session is saved to `~/.linkedin-mcp/session.json`.
-
-**Step 2: Run the server**
-
-```bash
-uvx linkedin-scraper-mcp
-```
-
-> [!NOTE]
-> Sessions may expire over time. If you encounter authentication issues, run `uvx linkedin-scraper-mcp --get-session` again.
-
-### uvx Setup Help
-
-<details>
-<summary><b>🔧 Configuration</b></summary>
-
-**Client Configuration:**
-
-```json
-{
-  "mcpServers": {
-    "linkedin": {
-      "command": "uvx",
-      "args": ["linkedin-scraper-mcp"]
-    }
-  }
-}
-```
-
-**Transport Modes:**
-
-- **Default (stdio)**: Standard communication for local MCP servers
-- **Streamable HTTP**: For web-based MCP server
-
-**CLI Options:**
-
-- `--get-session [PATH]` - Open browser to log in and save session (default: ~/.linkedin-mcp/session.json)
-- `--no-headless` - Show browser window (useful for debugging scraping issues)
-- `--log-level {DEBUG,INFO,WARNING,ERROR}` - Set logging level (default: WARNING)
-- `--transport {stdio,streamable-http}` - Set transport mode
-- `--host HOST` - HTTP server host (default: 127.0.0.1)
-- `--port PORT` - HTTP server port (default: 8000)
-- `--path PATH` - HTTP server path (default: /mcp)
-- `--clear-session` - Clear stored LinkedIn session file
-- `--timeout MS` - Browser timeout for page operations in milliseconds (default: 5000)
-- `--chrome-path PATH` - Path to Chrome/Chromium executable (for custom browser installations)
-
-**Basic Usage Examples:**
-
-```bash
-# Create a session interactively
-uvx linkedin-scraper-mcp --get-session
-
-# Run with debug logging
-uvx linkedin-scraper-mcp --log-level DEBUG
-```
-
-**HTTP Mode Example (for web-based MCP clients):**
-
-```bash
-uvx linkedin-scraper-mcp --transport streamable-http --host 127.0.0.1 --port 8080 --path /mcp
-```
-
-**Test with mcp inspector:**
-
-1. Install and run mcp inspector ```bunx @modelcontextprotocol/inspector```
-2. Click pre-filled token url to open the inspector in your browser
-3. Select `Streamable HTTP` as `Transport Type`
-4. Set `URL` to `http://localhost:8080/mcp`
-5. Connect
-6. Test tools
-
-</details>
-
-<details>
-<summary><b>❗ Troubleshooting</b></summary>
-
-**Installation issues:**
-
-- Ensure you have uv installed: `curl -LsSf https://astral.sh/uv/install.sh | sh`
-- Check uv version: `uv --version` (should be 0.4.0 or higher)
-
-**Session issues:**
-
-- Session is stored at `~/.linkedin-mcp/session.json`
-- Make sure you have only one active LinkedIn session at a time
-
-**Login issues:**
-
-- LinkedIn may require a login confirmation in the LinkedIn mobile app for `--get-session`
-- You might get a captcha challenge if you logged in frequently. Run `uvx linkedin-scraper-mcp --get-session` which opens a browser where you can solve it manually.
-
-**Timeout issues:**
-
-- If pages fail to load or elements aren't found, try increasing the timeout: `--timeout 10000`
-- Users on slow connections may need higher values (e.g., 15000-30000ms)
-- Can also set via environment variable: `TIMEOUT=10000`
-
-**Custom Chrome path:**
-
-- If Chrome is installed in a non-standard location, use `--chrome-path /path/to/chrome`
-- Can also set via environment variable: `CHROME_PATH=/path/to/chrome`
-
-</details>
-
-<br/>
-<br/>
-
-## 🐳 Docker Setup
-
-**Prerequisites:** Make sure you have [Docker](https://www.docker.com/get-started/) installed and running.
-
-### Authentication Options
-
-Docker runs headless (no browser window), so you need to authenticate using one of these methods:
-
-#### Option 1: Cookie Authentication (Simplest)
-
-Get your LinkedIn `li_at` cookie and pass it to Docker:
-
-```json
-{
-  "mcpServers": {
-    "linkedin": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "-e", "LINKEDIN_COOKIE", "stickerdaniel/linkedin-mcp-server"],
-      "env": {
-        "LINKEDIN_COOKIE": "your_li_at_cookie_value"
-      }
-    }
-  }
-}
-```
-
-**To get your `li_at` cookie:**
-
-1. Open LinkedIn in your browser in an **incognito** tab and log in
-2. Open DevTools (F12) → Application → Cookies → linkedin.com
-3. Copy the `li_at` cookie value
-
-#### Option 2: Session File (More Reliable)
-
-Create a session file locally, then mount it into Docker.
-
-**Step 1: Create session using uvx (one-time setup)**
-
-```bash
-uvx linkedin-scraper-mcp --get-session
-```
-
-This opens a browser window where you log in manually (5 minute timeout for 2FA, captcha, etc.). The session is saved to `~/.linkedin-mcp/session.json`.
-
-**Step 2: Configure Claude Desktop with Docker**
-
-```json
-{
-  "mcpServers": {
-    "linkedin": {
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i",
-        "-v", "~/.linkedin-mcp:/home/pwuser/.linkedin-mcp",
-        "stickerdaniel/linkedin-mcp-server:latest"
-      ]
-    }
-  }
-}
-```
-
-> [!NOTE]
-> Sessions may expire over time. If you encounter authentication issues, run `uvx linkedin-scraper-mcp --get-session` again locally, or use a fresh `li_at` cookie.
-
-> [!NOTE]
-> **Why can't I run `--get-session` in Docker?** Docker containers don't have a display server. You have two options:
-> 1. Create a session on your host using the [uvx setup](#-uvx-setup-recommended---universal) and mount it into Docker
-> 2. Pass your `li_at` cookie via `LINKEDIN_COOKIE` (if you encounter auth challenges, use option 1 instead)
-
-### Docker Setup Help
-
-<details>
-<summary><b>🔧 Configuration</b></summary>
-
-**Transport Modes:**
-
-- **Default (stdio)**: Standard communication for local MCP servers
-- **Streamable HTTP**: For a web-based MCP server
-
-**CLI Options:**
-
-- `--log-level {DEBUG,INFO,WARNING,ERROR}` - Set logging level (default: WARNING)
-- `--transport {stdio,streamable-http}` - Set transport mode
-- `--host HOST` - HTTP server host (default: 127.0.0.1)
-- `--port PORT` - HTTP server port (default: 8000)
-- `--path PATH` - HTTP server path (default: /mcp)
-- `--clear-session` - Clear stored LinkedIn session file
-- `--timeout MS` - Browser timeout for page operations in milliseconds (default: 5000)
-- `--chrome-path PATH` - Path to Chrome/Chromium executable (rarely needed in Docker)
-
-> [!NOTE]
-> `--get-session` and `--no-headless` are not available in Docker (no display server). Use the [uvx setup](#-uvx-setup-recommended---universal) to create sessions.
-
-**HTTP Mode Example (for web-based MCP clients):**
-
-```bash
-docker run -it --rm \
-  -v ~/.linkedin-mcp:/home/pwuser/.linkedin-mcp \
-  -p 8080:8080 \
-  stickerdaniel/linkedin-mcp-server:latest \
-  --transport streamable-http --host 0.0.0.0 --port 8080 --path /mcp
-```
-
-**Test with mcp inspector:**
-
-1. Install and run mcp inspector ```bunx @modelcontextprotocol/inspector```
-2. Click pre-filled token url to open the inspector in your browser
-3. Select `Streamable HTTP` as `Transport Type`
-4. Set `URL` to `http://localhost:8080/mcp`
-5. Connect
-6. Test tools
-
-</details>
-
-<details>
-<summary><b>❗ Troubleshooting</b></summary>
-
-**Docker issues:**
-
-- Make sure [Docker](https://www.docker.com/get-started/) is installed
-- Check if Docker is running: `docker ps`
-
-**Login issues:**
-
-- Make sure you have only one active LinkedIn session at a time
-- LinkedIn may require a login confirmation in the LinkedIn mobile app for `--get-session`
-- You might get a captcha challenge if you logged in frequently. Run `uvx linkedin-scraper-mcp --get-session` which opens a browser where you can solve captchas manually. See the [uvx setup](#-uvx-setup-recommended---universal) for prerequisites.
-
-**Timeout issues:**
-
-- If pages fail to load or elements aren't found, try increasing the timeout: `--timeout 10000`
-- Users on slow connections may need higher values (e.g., 15000-30000ms)
-- Can also set via environment variable: `TIMEOUT=10000`
-
-**Custom Chrome path:**
-
-- If Chrome is installed in a non-standard location, use `--chrome-path /path/to/chrome`
-- Can also set via environment variable: `CHROME_PATH=/path/to/chrome`
-
-</details>
-
-<br/>
-<br/>
-
-## 📦 Claude Desktop (DXT Extension)
-
-**Prerequisites:** [Claude Desktop](https://claude.ai/download) and [Docker](https://www.docker.com/get-started/) installed & running
-
-**One-click installation** for Claude Desktop users:
-
-1. Download the [DXT extension](https://github.com/stickerdaniel/linkedin-mcp-server/releases/latest)
-2. Double-click to install into Claude Desktop
-3. Create a session: `uvx linkedin-scraper-mcp --get-session`
-
-> [!NOTE]
-> Sessions may expire over time. If you encounter authentication issues, run `uvx linkedin-scraper-mcp --get-session` again.
-
-### DXT Extension Setup Help
-
-<details>
-<summary><b>❗ Troubleshooting</b></summary>
-
-**First-time setup timeout:**
-
-- Claude Desktop has a ~60 second connection timeout
-- If the Docker image isn't cached, the pull may exceed this timeout
-- **Fix:** Pre-pull the image before first use:
-  ```bash
-  docker pull stickerdaniel/linkedin-mcp-server:2.3.0
-  ```
-- Then restart Claude Desktop
-
-**Docker issues:**
-
-- Make sure [Docker](https://www.docker.com/get-started/) is installed
-- Check if Docker is running: `docker ps`
-
-**Login issues:**
-
-- Make sure you have only one active LinkedIn session at a time
-- LinkedIn may require a login confirmation in the LinkedIn mobile app for `--get-session`
-- You might get a captcha challenge if you logged in frequently. Run `uvx linkedin-scraper-mcp --get-session` which opens a browser where you can solve captchas manually. See the [uvx setup](#-uvx-setup-recommended---universal) for prerequisites.
-
-**Timeout issues:**
-
-- If pages fail to load or elements aren't found, try increasing the timeout: `--timeout 10000`
-- Users on slow connections may need higher values (e.g., 15000-30000ms)
-- Can also set via environment variable: `TIMEOUT=10000`
-
-</details>
-
-<br/>
-<br/>
-
-## 🐍 Local Setup (Develop & Contribute)
-
-**Prerequisites:** [Git](https://git-scm.com/downloads) and [uv](https://docs.astral.sh/uv/) installed
-
-### Installation
-
-```bash
-# 1. Clone repository
-git clone https://github.com/stickerdaniel/linkedin-mcp-server
+# Clone this repo
+git clone https://github.com/ArseneVrnd/linkedin-mcp-server
 cd linkedin-mcp-server
 
-# 2. Install UV package manager (if not already installed)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# 3. Install dependencies
+# Install dependencies
 uv sync
-uv sync --group dev
-
-# 4. Install Playwright browser
 uv run playwright install chromium
 
-# 5. Install pre-commit hooks
-uv run pre-commit install
-
-# 6. Create a session (first time only)
-uv run -m linkedin_mcp_server --get-session
-
-# 7. Start the server
-uv run -m linkedin_mcp_server
+# Create LinkedIn session (opens browser for login)
+uv run linkedin-scraper-mcp --get-session --no-headless
 ```
 
-### Local Setup Help
+### Step 2: Start the Dashboard
 
-<details>
-<summary><b>🔧 Configuration</b></summary>
+**Terminal 1 - MCP Server:**
+```bash
+cd linkedin-mcp-server
+uv run linkedin-scraper-mcp
+```
 
-**CLI Options:**
+**Terminal 2 - Backend:**
+```bash
+cd dashboard/server
+npm install
+npm run dev
+# Runs on http://localhost:3001
+```
 
-- `--get-session [PATH]` - Open browser to log in and save session (default: ~/.linkedin-mcp/session.json)
-- `--no-headless` - Show browser window (useful for debugging scraping issues)
-- `--log-level {DEBUG,INFO,WARNING,ERROR}` - Set logging level (default: WARNING)
-- `--transport {stdio,streamable-http}` - Set transport mode
-- `--host HOST` - HTTP server host (default: 127.0.0.1)
-- `--port PORT` - HTTP server port (default: 8000)
-- `--path PATH` - HTTP server path (default: /mcp)
-- `--clear-session` - Clear stored LinkedIn session file
-- `--timeout MS` - Browser timeout for page operations in milliseconds (default: 5000)
-- `--session-info` - Check if current session is valid and exit
-- `--linkedin-cookie COOKIE` - LinkedIn session cookie (li_at) for authentication
-- `--slow-mo MS` - Delay between browser actions in milliseconds (default: 0, useful for debugging)
-- `--user-agent STRING` - Custom browser user agent
-- `--viewport WxH` - Browser viewport size (default: 1280x720)
-- `--chrome-path PATH` - Path to Chrome/Chromium executable (for custom browser installations)
-- `--help` - Show help
+**Terminal 3 - Frontend:**
+```bash
+cd dashboard/client
+npm install
+npm run dev
+# Opens http://localhost:5173
+```
 
-> **Note:** Most CLI options have environment variable equivalents. See `.env.example` for details.
+### Step 3: Use Claude Code
 
-**HTTP Mode Example (for web-based MCP clients):**
+Open the dashboard in your browser, then use Claude Code to scrape jobs. Claude will **automatically** generate CVs and cover letters for each job!
+
+```
+# Example: Scrape jobs via Claude Code
+Search for "Business Analyst" jobs in "Paris" on LinkedIn
+```
+
+Claude detects new jobs and runs:
+- `/adapt-resume [job-id]` → Tailored CV saved to `cvs_adaptes/`
+- `/generate-cover-letter [job-id]` → Cover letter saved to database
+
+---
+
+## 📚 Documentation
+
+### For Users
+- **[QUICK_START.md](QUICK_START.md)** - Detailed setup guide
+- **[IMPROVEMENTS_SUMMARY.md](IMPROVEMENTS_SUMMARY.md)** - Full feature documentation
+- **[SKILLS_CREATED.md](SKILLS_CREATED.md)** - AI skills usage guide
+- **[.claude/skills/README.md](.claude/skills/README.md)** - Skills technical documentation
+
+### For Developers
+- **[CLAUDE.md](CLAUDE.md)** - Development guide & architecture
+- **[MEMORY.md](C:\Users\arsen\.claude\projects\d--linkedin-scraper\memory\MEMORY.md)** - Project patterns & lessons learned
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
+
+---
+
+## 🏗️ Architecture
+
+```
+linkedin-mcp-server/
+├── linkedin_mcp_server/          # Python MCP server (original + enhanced)
+│   └── tools/job.py              # Enhanced scraping (10+ fields)
+├── dashboard/
+│   ├── server/                   # Express + SQLite backend
+│   │   ├── src/
+│   │   │   ├── routes/           # API endpoints
+│   │   │   ├── utils/            # Auto-tagging, helpers
+│   │   │   ├── scheduler.js      # Cron automation
+│   │   │   └── db.js             # Database + migrations
+│   │   └── data/
+│   │       └── tracker.db        # SQLite database
+│   └── client/                   # React + Vite frontend
+│       └── src/
+│           ├── pages/            # Dashboard, Jobs, Pipeline, etc.
+│           ├── components/       # UI components
+│           └── hooks/            # React hooks
+├── cvs_adaptes/                  # Generated CVs (1 per company)
+├── .claude/                      # Claude Code configuration
+│   └── skills/                   # AI skills (resume, cover letter)
+│       ├── adapt-resume.md       # CV adaptation skill
+│       ├── generate-cover-letter.md  # Cover letter skill
+│       └── README.md             # Skills documentation
+├── CLAUDE.md                     # Development guide
+└── README.md                     # This file
+```
+
+---
+
+## 🎨 Features in Detail
+
+### 1. LinkedIn MCP Server (Original + Enhanced)
+
+**Original Features:**
+- ✅ Get person profiles
+- ✅ Get company profiles
+- ✅ Get company posts
+- ✅ Search jobs
+- ✅ Get job details
+
+**Enhancements:**
+- ✅ Extract 10+ additional fields per job (skills, salary, seniority, remote status, benefits, applicants count)
+- ✅ Parse structured data from LinkedIn insights
+- ✅ Auto-detect remote/hybrid positions
+- ✅ Extract skills from job criteria
+
+### 2. Job Application Tracker Dashboard
+
+**Core Features:**
+- 📋 Job list table with filters, search, bulk operations
+- 🗂️ Kanban pipeline (Saved → Applied → Interview → Offer → Accepted/Rejected)
+- 📊 Analytics dashboard (conversion rates, success metrics)
+- 🏷️ Intelligent auto-tagging (Remote, Senior, High Salary, etc.)
+- 📅 Saved search profiles with scheduling
+- ⚡ Keyboard shortcuts (Ctrl+N, Ctrl+I, Ctrl+P, etc.)
+
+**Data Management:**
+- SQLite database with auto-migrations
+- Bulk operations (update status, add tags, delete)
+- Export/import capabilities
+- Version control for CVs (saved by company name)
+
+### 3. AI-Powered Content Generation
+
+#### 📄 Resume/CV Adaptation Skill
+
+**Location:** `.claude/skills/adapt-resume.md`
+
+Automatically adapts your CV to match job descriptions:
+- 🔍 Skill gap analysis (strong matches vs. gaps)
+- 🏢 Industry context detection (Finance, Tech, Consulting, Corporate)
+- 🔑 ATS keyword optimization
+- 💰 Finance-specific terminology (P&L, DCF, EBITDA, FP&A)
+- 📊 Quantified achievements (%, $, time metrics)
+- 📁 Saves to `cvs_adaptes/CV_Arsene_Vuarand_{CompanyName}.txt`
+
+**Output Example:**
+```
+📄 CV ADAPTED FOR: JPMorgan Chase - Business Analyst
+
+🎯 KEY CHANGES:
+- Reordered competencies to prioritize financial analysis
+- Added P&L, FP&A, financial modeling keywords
+- Emphasized $4M margin improvement at HP
+
+🔑 KEYWORD OPTIMIZATION:
+- Matched: 18/22 required skills (82%)
+
+⚠️ SKILL GAPS:
+- SQL Server Reporting Services (SSRS)
+- Mitigation: Emphasize Power BI expertise
+```
+
+#### ✍️ Cover Letter Generation Skill
+
+**Location:** `.claude/skills/generate-cover-letter.md`
+
+Generates comprehensive, personalized cover letters (500-700 words):
+- 🎯 Company-specific opening hook with research
+- 📖 STAR format examples (Situation, Task, Action, Result)
+- 💼 Industry-appropriate tone (formal for finance, casual for startups)
+- 🎨 Cultural fit demonstration
+- ❌ No generic clichés ("team player," "hit the ground running")
+- 💾 Saves to database via `/api/jobs/:jobId/cover-letters`
+
+**5-Paragraph Structure:**
+1. **Opening (100-120w):** Attention-grabbing hook with company insight
+2. **Body Para 1 (140-160w):** Core competency with detailed example
+3. **Body Para 2 (140-160w):** Technical/analytical strength
+4. **Body Para 3 (120-140w):** Cultural fit or unique differentiator
+5. **Closing (80-100w):** Strong conclusion with call-to-action
+
+---
+
+## 🔧 Configuration
+
+### LinkedIn Session Management
+
+LinkedIn sessions are stored in `~/.linkedin-mcp/session.json`. Sessions may expire periodically.
+
+**To refresh your session:**
+```bash
+uv run linkedin-scraper-mcp --get-session --no-headless
+```
+
+This opens a browser where you can log in (handles 2FA, captcha, etc.).
+
+### Database Schema
+
+The tracker uses SQLite with auto-migrations. Schema includes:
+
+**Tables:**
+- `jobs` - Job listings (title, company, description, skills, salary, status, etc.)
+- `tags` - Custom tags for categorization
+- `job_tags` - Many-to-many relationship
+- `cover_letters` - Generated cover letters
+- `saved_searches` - Scheduled search profiles
+- `notes` - Job-specific notes
+- `interviews` - Interview tracking
+
+**Auto-Migration:**
+When you start the server, it automatically adds new columns if they don't exist. No manual migrations needed!
+
+### Environment Variables
+
+**Backend (dashboard/server/.env):**
+```env
+PORT=3001
+DATABASE_PATH=./data/tracker.db
+NODE_ENV=development
+```
+
+**Frontend (dashboard/client/.env):**
+```env
+VITE_API_URL=http://localhost:3001
+```
+
+---
+
+## 📖 Usage Guide
+
+### Workflow
+
+**1. Scrape Jobs from LinkedIn**
+```
+# Via Claude Code in the dashboard
+"Search for Business Analyst jobs in Paris"
+```
+
+**2. Claude Auto-Generates Content**
+- Detects new jobs in database
+- Adapts CV for each job
+- Generates cover letter for each job
+- Reports completion
+
+**3. Review in Dashboard**
+- Open http://localhost:5173
+- View generated CVs in `cvs_adaptes/`
+- View cover letters in job detail panel
+- Edit if needed
+
+**4. Apply**
+- Export CV as PDF (via JobDetail component)
+- Copy cover letter text
+- Apply on company website or LinkedIn
+- Update status to "Applied"
+
+**5. Track Progress**
+- Move jobs through pipeline (Kanban board)
+- Add notes, schedule interviews
+- Track success metrics in analytics
+
+### API Endpoints
+
+**Jobs:**
+- `GET /api/jobs` - List jobs (with filters, search, pagination)
+- `POST /api/jobs` - Create job
+- `PUT /api/jobs/:id` - Update job
+- `DELETE /api/jobs/:id` - Delete job
+- `POST /api/jobs/bulk/update-status` - Bulk status update
+- `POST /api/jobs/bulk/add-tag` - Bulk add tag
+- `POST /api/jobs/:id/auto-tag` - Auto-tag single job
+- `POST /api/jobs/auto-tag-all` - Auto-tag all jobs
+
+**Cover Letters:**
+- `GET /api/jobs/:jobId/cover-letters` - List cover letters
+- `POST /api/jobs/:jobId/cover-letters` - Save cover letter
+- `DELETE /api/cover-letters/:id` - Delete cover letter
+
+**Saved Searches:**
+- `GET /api/saved-searches` - List searches
+- `POST /api/saved-searches` - Create search
+- `PUT /api/saved-searches/:id` - Update search
+- `DELETE /api/saved-searches/:id` - Delete search
+- `POST /api/saved-searches/:id/execute` - Execute search now
+
+**MCP Integration:**
+- `GET /api/mcp/status` - Check MCP connection
+- `POST /api/mcp/search-jobs` - Search LinkedIn
+- `POST /api/mcp/job-details` - Get enhanced job data
+- `POST /api/mcp/import-job` - Manual job import
+
+**Analytics:**
+- `GET /api/analytics/summary` - Overview metrics
+- `GET /api/analytics/timeline` - Application timeline
+- `GET /api/analytics/pipeline` - Pipeline stats
+
+### Keyboard Shortcuts
+
+- `Ctrl+N` - New job (quick add)
+- `Ctrl+I` - Import from LinkedIn
+- `Ctrl+R` - Refresh job list
+- `Ctrl+P` - Open pipeline (Kanban)
+- `Ctrl+F` - Focus search
+- `Esc` - Close modal/dialog
+
+---
+
+## 🧪 Testing
 
 ```bash
-uv run -m linkedin_mcp_server --transport streamable-http --host 127.0.0.1 --port 8000 --path /mcp
+# Backend tests
+cd dashboard/server
+npm test
+
+# MCP Server tests
+cd linkedin-mcp-server
+uv run pytest
 ```
 
-**Claude Desktop:**
+---
 
-```json
-{
-  "mcpServers": {
-    "linkedin": {
-      "command": "uv",
-      "args": ["--directory", "/path/to/linkedin-mcp-server", "run", "-m", "linkedin_mcp_server"]
-    }
-  }
-}
+## 🤝 Who Can Use This?
+
+✅ **Anyone with a Claude Code subscription!**
+
+- No additional API keys needed
+- No Anthropic API costs
+- Uses your existing Claude Code session
+- Works on Windows, macOS, Linux
+
+**Requirements:**
+- Claude Code account (paid subscription)
+- Node.js 20+
+- Python 3.12+
+- Basic command-line knowledge
+
+**Best For:**
+- Job seekers applying to multiple positions
+- Finance/business analyst roles (skills are optimized for this)
+- Users who want automation for repetitive tasks
+- Anyone tired of manually tailoring CVs and cover letters
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Port already in use (3001 or 5173):**
+```bash
+# Windows
+netstat -ano | findstr :3001
+taskkill /PID <PID> /F
+
+# macOS/Linux
+lsof -ti:3001 | xargs kill -9
 ```
 
-</details>
+**LinkedIn session expired:**
+```bash
+uv run linkedin-scraper-mcp --get-session --no-headless
+```
 
-<details>
-<summary><b>❗ Troubleshooting</b></summary>
+**MCP server not connecting:**
+1. Ensure MCP server is running (Terminal 1)
+2. Check session file exists: `~/.linkedin-mcp/session.json`
+3. Restart backend server
 
-**Login issues:**
+**Skills not generating:**
+1. Verify skills exist in `.claude/skills/`
+2. Check master CV exists: `cvs_adaptes/CV_Arsene_Vuarand_Generic.txt`
+3. Ensure job has description in database
 
-- Make sure you have only one active LinkedIn session at a time
-- LinkedIn may require a login confirmation in the LinkedIn mobile app for `--get-session`
-- You might get a captcha challenge if you logged in frequently. The `--get-session` command opens a browser where you can solve it manually.
+**Database issues:**
+```bash
+# Reset database (WARNING: deletes all data)
+rm dashboard/server/data/tracker.db
+npm run dev  # Auto-recreates with schema
+```
 
-**Scraping issues:**
+### Getting Help
 
-- Use `--no-headless` to see browser actions and debug scraping problems
-- Add `--log-level DEBUG` to see more detailed logging
+- **Issues:** [GitHub Issues](https://github.com/ArseneVrnd/linkedin-mcp-server/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/ArseneVrnd/linkedin-mcp-server/discussions)
+- **Original Project:** [stickerdaniel/linkedin-mcp-server](https://github.com/stickerdaniel/linkedin-mcp-server)
 
-**Session issues:**
+---
 
-- Session is stored in `~/.linkedin-mcp/session.json`
-- Use `--clear-session` to clear the session and start fresh
+## 🗺️ Roadmap
 
-**Python/Playwright issues:**
+### Planned Features
+- [ ] Multi-language support (French CVs/cover letters)
+- [ ] A/B testing for cover letters (track which version gets responses)
+- [ ] Interview prep agent (generate questions based on cover letter)
+- [ ] Email notifications (when new jobs match criteria)
+- [ ] Browser extension (one-click import from LinkedIn page)
+- [ ] Resume parsing (extract skills from uploaded CV)
+- [ ] Job matching score (ML-based compatibility)
 
-- Check Python version: `python --version` (should be 3.12+)
-- Reinstall Playwright: `uv run playwright install chromium`
-- Reinstall dependencies: `uv sync --reinstall`
+### Contributions Welcome!
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-**Timeout issues:**
+---
 
-- If pages fail to load or elements aren't found, try increasing the timeout: `--timeout 10000`
-- Users on slow connections may need higher values (e.g., 15000-30000ms)
-- Can also set via environment variable: `TIMEOUT=10000`
+## 📜 License
 
-**Custom Chrome path:**
+This project is licensed under the **Apache 2.0 License** - same as the original project.
 
-- If Chrome is installed in a non-standard location, use `--chrome-path /path/to/chrome`
-- Can also set via environment variable: `CHROME_PATH=/path/to/chrome`
+**Important Notes:**
+- ⚠️ Use in accordance with [LinkedIn's Terms of Service](https://www.linkedin.com/legal/user-agreement)
+- ⚠️ Web scraping may violate LinkedIn's terms
+- ⚠️ This tool is for **personal use only**
+- ⚠️ Keep your session file (`~/.linkedin-mcp/session.json`) secure
 
-</details>
+---
 
-Feel free to open an [issue](https://github.com/stickerdaniel/linkedin-mcp-server/issues) or [PR](https://github.com/stickerdaniel/linkedin-mcp-server/pulls)!
+## 🙏 Acknowledgements
 
-<br/>
-<br/>
-
-## Acknowledgements
-
+### Original Project
 Built with [LinkedIn Scraper](https://github.com/joeyism/linkedin_scraper) by [@joeyism](https://github.com/joeyism) and [FastMCP](https://gofastmcp.com/).
 
-⚠️ Use in accordance with [LinkedIn's Terms of Service](https://www.linkedin.com/legal/user-agreement). Web scraping may violate LinkedIn's terms. This tool is for personal use only.
+**Forked from:** [stickerdaniel/linkedin-mcp-server](https://github.com/stickerdaniel/linkedin-mcp-server) by [@stickerdaniel](https://github.com/stickerdaniel)
 
-## License
+### This Fork
+Enhanced by [@ArseneVrnd](https://github.com/ArseneVrnd) with:
+- Full-stack job application tracker (React + Express + SQLite)
+- AI-powered CV adaptation and cover letter generation (Claude Code skills)
+- Advanced analytics and automation features
 
-This project is licensed under the Apache 2.0 license.
+### Built With
+- **Backend:** Express.js, SQLite, better-sqlite3, node-cron
+- **Frontend:** React, Vite, Tailwind CSS v4, @dnd-kit, recharts
+- **MCP Server:** FastMCP, Playwright, linkedin_scraper
+- **AI:** Claude Code (by Anthropic)
 
-<br>
+---
+
+## ⭐ Star This Repo
+
+If you find this fork useful, please consider:
+- ⭐ Starring this repo
+- ⭐ Starring the [original repo](https://github.com/stickerdaniel/linkedin-mcp-server)
+- 📢 Sharing with other job seekers
+- 🤝 Contributing improvements
+
+---
+
+**Made with ❤️ for job seekers by job seekers**

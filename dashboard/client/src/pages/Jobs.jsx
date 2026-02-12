@@ -6,8 +6,10 @@ import JobFilters from '../components/jobs/JobFilters';
 import JobForm from '../components/jobs/JobForm';
 import JobImport from '../components/jobs/JobImport';
 import Modal from '../components/ui/Modal';
+import QuickActions from '../components/ui/QuickActions';
 import { useJobs } from '../hooks/useJobs';
 import { useTheme } from '../hooks/useTheme';
+import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { api } from '../lib/api';
 
 export default function Jobs() {
@@ -18,8 +20,21 @@ export default function Jobs() {
   const [tags, setTags] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [selectedJobs, setSelectedJobs] = useState([]);
 
   const { jobs, loading, refetch } = useJobs({ search, status, tag: selectedTag });
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    'ctrl+n': () => setShowAddForm(true),
+    'ctrl+i': () => setShowImport(true),
+    'ctrl+r': () => refetch(),
+    'escape': () => {
+      setShowAddForm(false);
+      setShowImport(false);
+      setSelectedJobs([]);
+    },
+  });
 
   useEffect(() => {
     api.getTags().then(setTags).catch(() => {});
@@ -30,6 +45,60 @@ export default function Jobs() {
     setShowAddForm(false);
     refetch();
   };
+
+  const handleBulkTag = async () => {
+    if (selectedJobs.length === 0) return;
+    // Implement bulk tag modal
+    console.log('Bulk tag:', selectedJobs);
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedJobs.length === 0) return;
+    if (!confirm(`Delete ${selectedJobs.length} jobs?`)) return;
+
+    try {
+      await api.bulkDeleteJobs(selectedJobs);
+      setSelectedJobs([]);
+      refetch();
+    } catch (err) {
+      alert('Failed to delete jobs');
+    }
+  };
+
+  const quickActions = [
+    {
+      type: 'new',
+      onClick: () => setShowAddForm(true),
+      shortcut: 'Ctrl+N',
+      tooltip: 'Add new job'
+    },
+    {
+      type: 'import',
+      onClick: () => setShowImport(true),
+      shortcut: 'Ctrl+I',
+      tooltip: 'Import from LinkedIn'
+    },
+    {
+      type: 'refresh',
+      onClick: () => refetch(),
+      shortcut: 'Ctrl+R',
+      label: false,
+      tooltip: 'Refresh list'
+    },
+  ];
+
+  const bulkActions = selectedJobs.length > 0 ? [
+    {
+      type: 'tag',
+      onClick: handleBulkTag,
+      label: `Tag (${selectedJobs.length})`
+    },
+    {
+      type: 'delete',
+      onClick: handleBulkDelete,
+      label: `Delete (${selectedJobs.length})`
+    },
+  ] : [];
 
   return (
     <div>
@@ -49,6 +118,12 @@ export default function Jobs() {
       </Header>
 
       <div className="p-6 space-y-4">
+        {/* Quick Actions */}
+        <div className="flex justify-between items-center">
+          <QuickActions actions={quickActions} />
+          {bulkActions.length > 0 && <QuickActions actions={bulkActions} />}
+        </div>
+
         <JobFilters
           search={search}
           onSearchChange={setSearch}
@@ -64,7 +139,11 @@ export default function Jobs() {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
           </div>
         ) : (
-          <JobTable jobs={jobs} />
+          <JobTable
+            jobs={jobs}
+            selectedJobs={selectedJobs}
+            onSelectionChange={setSelectedJobs}
+          />
         )}
       </div>
 

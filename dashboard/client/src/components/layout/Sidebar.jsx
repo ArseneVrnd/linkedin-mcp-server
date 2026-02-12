@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, FileText, Calendar, Settings, Wifi, WifiOff } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Kanban, FileText, Calendar, Settings, Wifi, WifiOff } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { api } from '../../lib/api';
 
 const links = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/jobs', icon: Briefcase, label: 'Jobs' },
+  { to: '/pipeline', icon: Kanban, label: 'Pipeline' },
   { to: '/resume', icon: FileText, label: 'Resume' },
   { to: '/interviews', icon: Calendar, label: 'Interviews' },
   { to: '/settings', icon: Settings, label: 'Settings' },

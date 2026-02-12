@@ -194,8 +194,51 @@ cython_debug/
 # DXT extension packages (too large for git)
 *.dxt
 
-# claude code settings
-.claude
+# claude code settings (but allow skills)
+.claude/*
+!.claude/skills/
 
 # opencode
 .opencode/plans
+
+# ===== Job Tracker Dashboard - Personal Data =====
+# Personal CVs (keep only Generic template)
+cvs_adaptes/*
+!cvs_adaptes/CV_Arsene_Vuarand_Generic.txt
+
+# Database with personal job data
+dashboard/server/data/*.db
+dashboard/server/data/*.db-shm
+dashboard/server/data/*.db-wal
+
+# Node modules
+dashboard/client/node_modules/
+dashboard/server/node_modules/
+dashboard/node_modules/
+node_modules/
+
+# Build outputs
+dashboard/client/dist/
+dashboard/client/build/
+
+# Environment files
+dashboard/server/.env
+dashboard/client/.env
+.env.local
+.env.production
+
+# LinkedIn session files (personal auth)
+.linkedin-mcp/
+session.json
+
+# Test/generated files
+gen.js
+gen_payloads.js
+nul
+
+# IDE
+.vscode/
+.idea/
+
+# Claude skills repo (cloned separately, not part of this project)
+claude-skills/
